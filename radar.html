@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>黑客松雷達｜黑客松雷達 Hub</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+.filters button{font:500 13px var(--font);color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.item-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="top">
+    <a href="index.html">首頁</a>
+    <a href="radar.html" class="active">黑客松雷達</a>
+    <a href="guide.html">專案規則說明</a>
+    <a href="https://github.com/candytangsys/hackathon-radar-hub" target="_blank" rel="noopener">GitHub</a>
+  </nav>
+
+  <header>
+    <h1>黑客松雷達</h1>
+    <p class="lede">目前收錄的開放中線上黑客松與競賽，資料來自 <code>data/items.json</code>。評分方式（獎金 p / 門檻 b / 主辦可信度 t，各 1–5 分）說明見<a href="guide.html">專案規則說明</a>。</p>
+  </header>
+
+  <div class="filters" id="filters"></div>
+  <section class="list" id="list"></section>
+
+  <footer>最後更新：2026-11-16 ‧ 報名前請自行至官方頁確認資格與截止日期。</footer>
+</div>
+
+<script>
+var THEME_NAMES = {ai:"AI / LLM", web3:"Web3", app:"App / 一般開發", business:"商業 / 企業", design:"設計", education:"教育 / 青年"};
+var state = {theme:"all"};
+var ITEMS = [];
+
+function dayDiff(iso){
+  var now = new Date();
+  var a = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  var p = iso.split("-");
+  var b = new Date(+p[0], +p[1]-1, +p[2]);
+  return Math.round((b-a)/86400000);
+}
+
+function render(){
+  var rows = ITEMS.filter(function(x){ return state.theme==="all" || x.theme===state.theme; });
+  rows.sort(function(a,b){ return (b.p+b.b+b.t)-(a.p+a.b+a.t); });
+  document.getElementById("list").innerHTML = rows.map(function(x){
+    var d = dayDiff(x.end);
+    var dtxt = d<0 ? "已截止" : (d===0 ? "今天截止" : ("剩 "+d+" 天"));
+    return '<article class="item">'+
+      '<div class="item-head"><h3>'+x.name+'</h3><span class="prize">'+x.prize+'</span></div>'+
+      '<div class="meta"><span class="tag">'+(THEME_NAMES[x.theme]||x.theme)+'</span><span>'+x.org+'</span><span>'+dtxt+'（'+x.end+'）</span></div>'+
+      '<p>'+x.note+'</p>'+
+      '<div class="meta"><span>獎金 '+x.p+'/5 ‧ 門檻 '+x.b+'/5 ‧ 主辦 '+x.t+'/5</span><span>來源：'+x.src+'</span><a href="'+x.url+'" target="_blank" rel="noopener">活動頁 →</a></div>'+
+    '</article>';
+  }).join("") || '<p class="lede">這個主題目前沒有收錄的活動。</p>';
+}
+
+function buildFilters(){
+  var themes = ["all"].concat(Array.from(new Set(ITEMS.map(function(x){return x.theme;}))));
+  var el = document.getElementById("filters");
+  themes.forEach(function(th){
+    var btn = document.createElement("button");
+    btn.textContent = th==="all" ? "全部" : (THEME_NAMES[th]||th);
+    btn.setAttribute("aria-pressed", state.theme===th ? "true":"false");
+    btn.addEventListener("click", function(){
+      state.theme = th;
+      Array.prototype.forEach.call(el.children, function(c){ c.setAttribute("aria-pressed","false"); });
+      btn.setAttribute("aria-pressed","true");
+      render();
+    });
+    el.appendChild(btn);
+  });
+}
+
+fetch("data/items.json").then(function(r){ return r.json(); }).then(function(data){
+  ITEMS = data;
+  buildFilters();
+  render();
+}).catch(function(err){
+  document.getElementById("list").innerHTML = '<p class="lede">資料載入失敗：'+err+'</p>';
+});
+</script>
+</body>
+</html>

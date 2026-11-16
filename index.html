@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>黑客松雷達 Hub</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="wrap">
+  <nav class="top">
+    <a href="index.html" class="active">首頁</a>
+    <a href="radar.html">黑客松雷達</a>
+    <a href="guide.html">專案規則說明</a>
+    <a href="https://github.com/candytangsys/hackathon-radar-hub" target="_blank" rel="noopener">GitHub</a>
+  </nav>
+
+  <header>
+    <h1>黑客松雷達 Hub</h1>
+    <p class="lede">一個持續更新的「線上可參加、有獎金的黑客松與競賽」知識庫。每一筆資料都遵循同一套固定格式記錄，方便之後用 AI 持續擴充、而不必每次重新設計頁面。</p>
+  </header>
+
+  <section class="card">
+    <h2>這個專案在做什麼</h2>
+    <p>市面上的黑客松/競賽資訊分散在 Devpost、DoraHacks、lablab.ai、HackQuest 等多個平台，資訊常常過時或互相矛盾。這個網站把已核實的開放中活動整理成統一格式的清單（<a href="radar.html">黑客松雷達</a>），並把「如何核實、如何分類、如何新增一筆資料」的規則寫在 <code>CLAUDE.md</code> 裡，讓負責維護這個網站的 AI 助理之後可以照同一套規則繼續更新，而不需要每次重新討論格式。</p>
+  </section>
+
+  <section class="card">
+    <h2>快速導覽</h2>
+    <ul>
+      <li><a href="radar.html">黑客松雷達</a> — 目前收錄的開放中活動列表，依獎金／門檻／主辦可信度打分排序。</li>
+      <li><a href="guide.html">專案規則說明</a> — 人類可讀版的維護規則摘要（完整版見 repo 裡的 <code>CLAUDE.md</code>）。</li>
+      <li><a href="data/items.json">data/items.json</a> — 所有活動的原始結構化資料，新增活動就是在這裡加一筆。</li>
+    </ul>
+  </section>
+
+  <footer>黑客松雷達 Hub · 資料整理僅供參考，報名前請務必至官方頁確認資格與截止日期。</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>專案規則說明｜黑客松雷達 Hub</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="wrap">
+  <nav class="top">
+    <a href="index.html">首頁</a>
+    <a href="radar.html">黑客松雷達</a>
+    <a href="guide.html" class="active">專案規則說明</a>
+    <a href="https://github.com/candytangsys/hackathon-radar-hub" target="_blank" rel="noopener">GitHub</a>
+  </nav>
+
+  <header>
+    <h1>專案規則說明</h1>
+    <p class="lede">這頁是給人看的摘要版。完整、給 AI 助理看的規則寫在 repo 根目錄的 <code>CLAUDE.md</code>，任何人（或 AI）要新增/修改資料前都應該先讀那份文件。</p>
+  </header>
+
+  <section class="card">
+    <h2>三層分類</h2>
+    <p>每一筆活動只會落在三個狀態之一：</p>
+    <ul>
+      <li><b>ITEMS（data/items.json）</b> — 已核實「獎金、截止日、是否線上可參加」的活動，會顯示在<a href="radar.html">黑客松雷達</a>頁面上。</li>
+      <li><b>WATCH</b> — 找到活動但資訊不全（例如獎金或日期還沒公布），先不display在主列表，等資訊補齊再升級成 ITEMS。</li>
+      <li><b>SKIP</b> — 已截止、限定地區/年齡/需邀請、或必須實體到場且無線上組別的活動，記錄原因但不顯示在主列表。</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>每筆資料的固定欄位</h2>
+    <p><code>data/items.json</code> 裡每個物件都必須有以下欄位，缺一不可：</p>
+    <pre>id, name, org, theme, type,
+prize, prizeNote,
+end, endNote,
+p, b, t,
+note, src, url</pre>
+    <p>其中 <code>p</code>（獎金）、<code>b</code>（門檻，分數越高越容易參加）、<code>t</code>（主辦可信度）都是 1–5 分的整數，評分標準見 <code>CLAUDE.md</code>。只有能從官方頁或可信來源讀到的日期與金額才能填進去，讀不到就先放 WATCH，不能猜測。</p>
+  </section>
+
+  <section class="card">
+    <h2>新增一筆活動時怎麼做</h2>
+    <ol>
+      <li>搜尋並用官方頁面核實：是否線上可完整參賽、有無現金/明確獎項、截止日是否已過。</li>
+      <li>依固定欄位整理成一個物件，加進 <code>data/items.json</code> 陣列。</li>
+      <li>不要修改 <code>radar.html</code> 或 <code>assets/style.css</code> 的程式邏輯——頁面會自動讀取 JSON 並重新排序顯示，新增資料不需要碰版面程式碼。</li>
+      <li>在 commit 訊息裡簡單寫新增/移除了哪些活動。</li>
+    </ol>
+  </section>
+
+  <footer>完整規則：<a href="https://github.com/candytangsys/hackathon-radar-hub/blob/main/CLAUDE.md" target="_blank" rel="noopener">CLAUDE.md</a></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+:root{
+  --bg:#F0F3F5; --panel:#FFFFFF; --ink:#12212B; --muted:#5A6B77; --line:#D6DEE4;
+  --accent:#0B6E6E; --accent-soft:#DCEFEE;
+  --t-ai:#5B4BD6; --t-web3:#0B6E6E; --t-app:#B4531A; --t-business:#8A5A1F; --t-design:#A8336D; --t-education:#8A6D1F;
+  --font:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0D151B; --panel:#15212A; --ink:#E5EDF1; --muted:#93A4AF; --line:#26353F;
+    --accent:#4CC7BC; --accent-soft:#12312F;
+    --t-ai:#A99BFF; --t-web3:#4CC7BC; --t-app:#F0A26B; --t-business:#E0B15A; --t-design:#F472B6; --t-education:#D9B65B;
+  }
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.65 var(--font);margin:0;padding:0 16px 56px}
+.wrap{max-width:900px;margin:0 auto;padding-top:28px;display:flex;flex-direction:column;gap:24px}
+h1{font-size:26px;margin:0}
+h2{font-size:18px;margin:0 0 8px}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+nav.top{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;border-bottom:1px solid var(--line);padding-bottom:12px}
+nav.top a{color:var(--muted);font-weight:600}
+nav.top a.active{color:var(--accent)}
+.lede{color:var(--muted);max-width:62ch}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.list{display:flex;flex-direction:column;gap:12px}
+.item{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.item h3{margin:0;font-size:16px}
+.tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;border:1px solid var(--line);border-radius:4px;padding:1px 8px;margin-right:6px}
+.tag i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.meta{font-size:12px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap}
+.prize{font:600 15px var(--mono)}
+footer{font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px;margin-top:8px}
+code{background:var(--accent-soft);padding:1px 5px;border-radius:4px;font-family:var(--mono);font-size:13px}
+pre{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px;overflow:auto}
